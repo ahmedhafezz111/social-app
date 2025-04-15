@@ -8,14 +8,28 @@
       </div>
       <a routerLink="timeline" class="btn btn-ghost text-xl text-blue-700">Linked Posts</a>
     </div>
-    <div class="navbar-center hidden lg:flex">
-      <ul class="menu menu-horizontal px-1">
-       
-        <li><a routerLink="profile" routerLinkActive="text-blue-600 font-bold">My Posts</a></li>
-      </ul>
-    </div>
-    <div class="navbar-end">
-      <a role="button" class="btn" (click)="usersService.logOut()">LogOut</a>
-    </div>
+    @if(getUser() == null){
+      <!-- <div class="navbar-center hidden lg:flex">
+        <ul class="menu menu-horizontal px-1">
+         
+          <li><a routerLink="profile" routerLinkActive="text-blue-600 font-bold">My Posts</a></li>
+        </ul>
+      </div> -->
+      <div class="navbar-end">
+        <a role="button" class="btn bg-blue-500 text-white" routerLink="register">Register</a>
+      </div>
+    }
+    @if(getUser()){
+      <div class="navbar-center hidden lg:flex">
+        <ul class="menu menu-horizontal px-1">
+         
+          <li><a routerLink="profile" routerLinkActive="text-blue-600 font-bold">My Posts</a></li>
+        </ul>
+      </div>
+      <div class="navbar-end">
+        <a role="button" class="btn" (click)="usersService.logOut()">LogOut</a>
+      </div>
+    }
+    
     
   </div>

@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
 import { UsersService } from '../../core/services/users/users.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule ,RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
