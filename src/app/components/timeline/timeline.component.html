@@ -1,0 +1,71 @@
+<section class="lg:w-1/3 mx-auto my-3 flex gap-5 flex-col">
+
+    <!-- create post -->
+    <div class="bg-white p-3 rounded-md mt-[60px]">
+        <input  onclick="my_modal_1.showModal()" readonly type="text" placeholder="What's in your mind" class="input input-md w-full input-primary" />
+    </div>
+
+    <dialog id="my_modal_1" class="modal">
+        <div class="modal-box">
+          <h3 class="text-lg font-bold border-b-[1px] p-3">Add Post</h3>
+          <textarea [(ngModel)]="content" type="text" placeholder="Write Here..." plca class="textarea textarea-primary w-full mt-3"></textarea>
+            
+            <div class="flex items-center justify-center w-full">
+                @if(savedFile == null){
+                    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 mt-5 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  hover:bg-gray-100 ">
+                
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                      
+                                <svg class="w-8 h-8 mb-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                </svg>
+                    
+                
+             
+                     
+                      
+                        <p class="mb-2 text-sm text-gray-500 "><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                        <p class="text-xs text-gray-500 ">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                    </div>
+                    <input (change)="changeImg($event)" id="dropzone-file" type="file" class="hidden" />
+                </label>
+            }@else if(savedFile !== null){
+                <h2>{{savedFile.name}}</h2>
+                  }
+              
+            </div> 
+
+          <div class="modal-action">
+            <form method="dialog">
+                <button (click)="addPost()" class="btn btn-outline btn-primary mx-3 ">Post</button>
+              <button class="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+
+    <!-- all posts -->
+    @for (post of postsData; track post._id) {
+        <article class="bg-white p-3 rounded-md flex flex-col gap-4">
+            <div class="flex items-center gap-3">
+                <img class="w-10 h-10 rounded-full" [src]="post.user.photo" alt="profile img">
+                <div>
+                    <h3 class="font-semibold">{{post.user.name}}</h3>
+                    <span class="font-light text-gray-500">{{post.createdAt | date:"medium" }} </span>
+                </div>
+       
+            </div>
+            <p>{{post.body}}</p>
+            <img class="rounded-md" [src]="post.image" alt="">
+            <button #ShowComment class="text-blue-700 self-start">Show Comments</button>
+            @defer (on interaction(ShowComment)) {
+                <app-comments [postId]="post._id"></app-comments>
+
+            }@loading {
+                <div class="text-blue-600" >Loading...</div>
+            }
+
+         </article>
+    }
+
+</section>

@@ -1,0 +1,44 @@
+<section class="flex flex-col gap-3 ">
+<!-- comment -->
+@if (commentsData.length === 0) {
+    <h3>no comments yet :(</h3>
+}
+ <div class="comment max-h-[300px] overflow-auto ">
+    @for (comment of commentsData; track comment._id) {
+      
+        <div class="bg-gray-200 p-3 rounded-md border mt-3">
+    
+            <div class="flex items-center gap-3">
+                <img class="w-8 h-8 rounded-full" [src]="comment.commentCreator.photo" alt="user photo">
+                <h3 class="font-semibold">{{comment.commentCreator.name}}</h3>
+                <span class="font-light text-gray-500">{{comment.createdAt | date:"medium" }}</span>
+                
+            </div>
+            <p class="text-gray-600 mt-4">{{comment.content}}</p>
+        
+        
+        </div>
+        
+     }
+ </div>
+
+
+
+<!-- add comment -->
+ 
+<form [formGroup]="commentGroup" (ngSubmit)="sendComment()">
+ 
+    <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50">
+    <label for="chat" class="sr-only">Your Comment</label>
+        <textarea formControlName="content" id="chat" rows="1" class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border focus:ring-2 focus:ring-blue-600 focus:outline-none border-gray-300 " placeholder="Your comment..."></textarea>
+            <button type="submit" class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 ">
+            <svg class="w-5 h-5 rotate-90 rtl:-rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z"/>
+            </svg>
+            <span class="sr-only">Send Comment</span>
+        </button>
+    </div>
+</form>
+
+</section>
+
