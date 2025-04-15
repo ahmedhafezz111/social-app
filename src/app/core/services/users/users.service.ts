@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Observable } from 'rxjs';
 import { jwtDecode } from "jwt-decode";
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 export class UsersService {
   userData:any = null
   router = inject(Router)
+  platformId = inject(PLATFORM_ID);
   constructor(private httpClient:HttpClient) { }
 
 
@@ -40,10 +42,11 @@ export class UsersService {
     this.router.navigate(['/login'])
   }
   saveUserData():void{
-    if(localStorage.getItem("socialToken") !== null){
-        this.userData = jwtDecode(localStorage.getItem("socialToken") !)
-        console.log('userData', this.userData);
-        
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem("socialToken");
+      if (token) {
+        this.userData = jwtDecode(token);
+      }
     }
   }
 }
