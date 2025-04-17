@@ -14,10 +14,46 @@
                             <input
                                 class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                                 type="email" placeholder="Email" formControlName="email" />
+                                      @if(loginForm.get('email')?.errors && loginForm.get('email')?.touched){
+                                    <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+                                      <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                                      </svg>
+                                      <div>
+                                          <ul class="mt-1.5 list-disc list-inside">
+                                            @if (loginForm.get('email')?.getError('required')) {
+                                            <li>Email is required</li>
+                                            }@else if (loginForm.get('email')?.getError('email')) {
+                                              <li>Enter valid email</li>
+                                            }
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  }
+                                
                             <input
                                 class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                                 type="password" placeholder="Password" formControlName="password" />
-                          
+                                @if(loginForm.get('password')?.errors && loginForm.get('password')?.touched){
+                                    <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+                                      <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                                      </svg>
+                                      <div>
+                                          <ul class="mt-1.5 list-disc list-inside">
+                                            @if (loginForm.get('password')?.getError('required')) {
+                                              <li>password is required</li>
+                                            }@else if (loginForm.get('password')?.getError('pattern')) {
+                                              <li>Enter valid password</li>
+                                              <li>Should Contain UpperCase</li>
+                                              <li>Should Contain Number</li>
+                                         
+                                            }
+                    
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  }
                             
                            
                                 <p class="py-8 text-sm text-gray-500 sm:mt-0">
@@ -27,8 +63,9 @@
                                    forget password?
                                     <a routerLink="/forget"  class="text-gray-700 underline">Change Password</a>.
                                   </p>
-                            <button
-                                class="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                            <button   [disabled]="loginForm.invalid"
+                            type="submit"
+                                class="mt-5 tracking-wide  disabled:bg-gray-700 font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                                 <svg class="w-6 h-6 -ml-2" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />

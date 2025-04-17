@@ -4,6 +4,7 @@ import { IPosts } from '../../core/interfaces/iposts';
 import { DatePipe } from '@angular/common';
 import { CommentsComponent } from "../../shared/ui/comments/comments.component";
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-timeline',
@@ -18,6 +19,8 @@ export class TimelineComponent implements OnInit{
   content:string = ""
 
   private readonly postsService = inject(PostsService)
+      private readonly toastrService = inject(ToastrService)
+  
 
 getPostsData():void{
   this.postsService.getAllPosts().subscribe({
@@ -54,6 +57,8 @@ this.postsService.createPost(formData).subscribe({
   next:(res)=>{
     console.log(res);
     this.getPostsData()
+    this.toastrService.success(res.message , 'Linked Posts')
+    
     
   }
 })

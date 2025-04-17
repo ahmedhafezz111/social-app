@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { CommentsComponent } from '../shared/ui/comments/comments.component';
 import { CommentsService } from '../core/services/comments/comments.service';
 import { IComment } from '../core/interfaces/icomment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -18,6 +19,7 @@ export class ProfileComponent implements OnInit {
 
     commentsData:IComment[] = []
     private readonly commentsService = inject(CommentsService)
+    private readonly toastrService = inject(ToastrService)
 
   private readonly postsService = inject(PostsService)
   postsData:IPosts[] =[]
@@ -33,6 +35,14 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  deleteMyPost(id:string):void{
+    this.postsService.deletePost(id).subscribe({
+      next:(res)=>{
+        this.profilePosts = res.posts
+        this.toastrService.success(res.message , 'Linked Posts')
+      }
+    })
+  }
 ngOnInit(): void {
   this.getMyPosts()
 }
