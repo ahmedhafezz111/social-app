@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export class TimelineComponent implements OnInit{
 
   postsData:IPosts[] =[]
-  savedFile!:File
+  savedFile: File | null = null;
   content:string = ""
 
   private readonly postsService = inject(PostsService)
@@ -52,13 +52,14 @@ changeImg(e:Event):void{
 addPost():void{
 const formData = new FormData()
 formData.append('body' , this.content)
-formData.append('image',this.savedFile)
+formData.append('image',this.savedFile !)
 this.postsService.createPost(formData).subscribe({
   next:(res)=>{
     console.log(res);
     this.getPostsData()
     this.toastrService.success(res.message , 'Linked Posts')
-    
+    this.content = '';
+    this.savedFile = null;
     
   }
 })

@@ -40,6 +40,7 @@ export class ProfileComponent implements OnInit {
       next:(res)=>{
         this.profilePosts = res.posts
         this.toastrService.success(res.message , 'Linked Posts')
+        this.getMyPosts()
       }
     })
   }
